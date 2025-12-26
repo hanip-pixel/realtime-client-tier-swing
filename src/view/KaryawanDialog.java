@@ -49,7 +49,6 @@ public class KaryawanDialog extends JDialog {
         departmentField.setText(karyawanToEdit.getDepartment());
         positionField.setText(karyawanToEdit.getPosition());
         
-        // Format salary tanpa mata uang, hanya angka dengan pemisah ribuan
         salaryField.setText(String.format("%,.0f", karyawanToEdit.getSalary()));
         
         if (karyawanToEdit.getHireDate() != null) {
@@ -105,12 +104,9 @@ public class KaryawanDialog extends JDialog {
         karyawan.setDepartment(departmentField.getText().trim());
         karyawan.setPosition(positionField.getText().trim());
         
-        // Parse salary dengan benar (hilangkan pemisah ribuan)
         String salaryText = salaryField.getText().trim();
         try {
-            // Hapus titik sebagai pemisah ribuan jika ada
             salaryText = salaryText.replace(".", "");
-            // Jika ada koma sebagai pemisah desimal, ambil hanya bagian integer
             if (salaryText.contains(",")) {
                 salaryText = salaryText.split(",")[0];
             }
@@ -125,7 +121,6 @@ public class KaryawanDialog extends JDialog {
                 karyawan.setHireDate(LocalDate.parse(hireDateText));
             }
         } catch (DateTimeParseException e) {
-            // Tanggal tidak valid, biarkan null
         }
         
         karyawan.setEmail(emailField.getText().trim());

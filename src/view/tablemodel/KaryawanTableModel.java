@@ -16,12 +16,11 @@ public class KaryawanTableModel extends AbstractTableModel {
         "Salary", "Hire Date", "Email", "Phone" 
     };
     
-    // Format untuk Indonesia
     private final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public KaryawanTableModel() {
-        currencyFormat.setMaximumFractionDigits(0); // Tanpa desimal
+        currencyFormat.setMaximumFractionDigits(0);
     }
 
     public void setKaryawanList(List<Karyawan> karyawanList) {
@@ -57,7 +56,7 @@ public class KaryawanTableModel extends AbstractTableModel {
             case 2 -> karyawan.getName();
             case 3 -> karyawan.getDepartment();
             case 4 -> karyawan.getPosition();
-            case 5 -> currencyFormat.format(karyawan.getSalary()); // Format: Rp 40.000.000
+            case 5 -> currencyFormat.format(karyawan.getSalary());
             case 6 -> karyawan.getHireDate() != null ? 
                      karyawan.getHireDate().format(dateFormatter) : "";
             case 7 -> karyawan.getEmail();
@@ -70,7 +69,7 @@ public class KaryawanTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return switch (columnIndex) {
             case 0 -> Integer.class;
-            case 5 -> String.class; // Salary formatted as currency string
+            case 5 -> String.class;
             default -> String.class;
         };
     }

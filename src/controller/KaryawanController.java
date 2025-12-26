@@ -91,7 +91,6 @@ public class KaryawanController {
         dialog.getSaveButton().addActionListener(e -> {
             Karyawan karyawan = dialog.getKaryawan();
             
-            // Validasi input
             if (karyawan.getEmployeeId().isEmpty() || karyawan.getName().isEmpty() || 
                 karyawan.getDepartment().isEmpty() || karyawan.getPosition().isEmpty()) {
                 JOptionPane.showMessageDialog(dialog, 

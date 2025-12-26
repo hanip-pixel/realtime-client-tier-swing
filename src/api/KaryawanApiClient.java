@@ -61,12 +61,10 @@ public class KaryawanApiClient implements WebSocket.Listener {
     public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
         String message = data.toString();
         
-        // HANYA tampilkan jika bukan response data besar
         if (!message.contains("GET_ALL_RESPONSE") || message.length() < 100) {
             System.out.println("Received: " + 
                 (message.length() > 100 ? message.substring(0, 100) + "..." : message));
         } else {
-            // Untuk response data besar, tampilkan ringkasan saja
             System.out.println("Received employee data (" + message.length() + " chars)");
         }
         
@@ -105,13 +103,11 @@ public class KaryawanApiClient implements WebSocket.Listener {
 
         responseFuture = new CompletableFuture<>();
         
-        // Hanya tampilkan action, bukan full JSON
         String action = extractAction(message);
         System.out.println("Sending: " + action);
         
         webSocket.sendText(message, true);
         
-        // Tunggu response dengan timeout
         try {
             return responseFuture.get(15, TimeUnit.SECONDS);
         } catch (Exception e) {
@@ -120,13 +116,11 @@ public class KaryawanApiClient implements WebSocket.Listener {
         }
     }
 
-    // Helper method untuk extract action dari JSON
     private String extractAction(String json) {
         try {
-            // Simple extraction - cari "action": di JSON
             int actionIndex = json.indexOf("\"action\":");
             if (actionIndex != -1) {
-                int start = actionIndex + 9; // setelah "action":"
+                int start = actionIndex + 9;
                 int end = json.indexOf("\"", start);
                 if (end != -1) {
                     return json.substring(start, end);
@@ -223,7 +217,6 @@ public class KaryawanApiClient implements WebSocket.Listener {
                 .orElseThrow(() -> new RuntimeException("Karyawan not found with id: " + id));
     }
 
-    // Helper classes
     private static class WebSocketMessage {
         String action;
         Object payload;
